@@ -1,6 +1,9 @@
 import yaml
 import json
 
+#Get base filename input from user for yaml and json files to be created
+filename_base = raw_input("What will the base filename be for yaml and json files? :")
+
 dict = {'ip_addr': '192.168.255.21', 'attribs': range(7)};
 list = range(8)
 list.append('dog')
@@ -17,3 +20,11 @@ print yaml.dump(list, default_flow_style=False)
 
 print 'yaml.dump(list, default_flow_style=True)'
 print yaml.dump(list, default_flow_style=True)
+
+#yaml filename
+yaml_filename = filename_base + '.yml'
+print 'Writing yaml file ' + filename_base + '.yml'
+with open(yaml_filename, "w") as f:
+    f.write(yaml.dump(list, default_flow_style=False))
+
+
