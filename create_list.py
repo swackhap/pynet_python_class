@@ -21,10 +21,17 @@ print yaml.dump(list, default_flow_style=False)
 print 'yaml.dump(list, default_flow_style=True)'
 print yaml.dump(list, default_flow_style=True)
 
+print 'json.dumps(list)'
+print json.dumps(list)
+
 #yaml filename
 yaml_filename = filename_base + '.yml'
 print 'Writing yaml file ' + filename_base + '.yml'
 with open(yaml_filename, "w") as f:
     f.write(yaml.dump(list, default_flow_style=False))
 
-
+#json filename
+json_filename = filename_base + '.json'
+print 'Writing json file ' + json_filename
+with open(json_filename, "w") as f:
+    json.dumps(list,f)
