@@ -2,9 +2,8 @@
 
 import telnetlib
 import time
-
-TELNET_PORT = 23
-TELNET_TIMEOUT = 6
+import socket
+import sys
 
 def send_command(remote_conn, cmd):
     cmd = cmd.rstrip()
@@ -12,19 +11,29 @@ def send_command(remote_conn, cmd):
     time.sleep(1)
     return remote_conn.read_very_eager()
 
+def login(ip_addr, username, password):
+    TELNET_PORT = 23
+    TELNET_TIMEOUT = 6
+    
+    remote_conn = telnetlib.Telnet(ip_addr, TELNET_PORT, TELNET_TIMEOUT)
+    output = remote_conn.read_until("sername:", TELNET_TIMEOUT)
+    remote_conn.write(username + '\n')
+    output += remote_conn.read_until("ssword:", TELNET_TIMEOUT)
+    remote_conn.write(password + '\n')
+    time.sleep(1)
+    output += remote_conn.read_very_eager()
+    return remote_conn, output
+
 def main():
     ip_addr = '50.76.53.27'
     username = 'pyclass'
     password = '88newclass'
 
-    remote_conn = telnetlib.Telnet(ip_addr, TELNET_PORT, TELNET_TIMEOUT)
-    output = remote_conn.read_until("sername:", TELNET_TIMEOUT)
-    remote_conn.write(username + '\n')
-    output = remote_conn.read_until("ssword:", TELNET_TIMEOUT)
-
-    remote_conn.write(password + '\n')
-    time.sleep(1)
-    output = remote_conn.read_very_eager()
+    try:
+        remote_conn, output  = login(ip_addr, username, password)
+    except socket.timeout:
+        sys.exit("Connection timed out")
+    output += remote_conn.read_very_eager()
     print output
 
     send_command(remote_conn, 'terminal length 0')
