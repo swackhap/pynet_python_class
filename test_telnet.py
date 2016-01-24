@@ -6,6 +6,12 @@ import time
 TELNET_PORT = 23
 TELNET_TIMEOUT = 6
 
+def send_command(remote_conn, cmd):
+    cmd = cmd.rstrip()
+    remote_conn.write(cmd + '\n')
+    time.sleep(1)
+    return remote_conn.read_very_eager()
+
 def main():
     ip_addr = '50.76.53.27'
     username = 'pyclass'
@@ -21,14 +27,9 @@ def main():
     output = remote_conn.read_very_eager()
     print output
 
-    remote_conn.write("terminal length 0" + '\n')
-    time.sleep(1)
-    output = remote_conn.read_very_eager()
-    print output
+    send_command(remote_conn, 'terminal length 0')
+    output = send_command(remote_conn, 'show version')
 
-    remote_conn.write("show version" + '\n')
-    time.sleep(1)
-    output = remote_conn.read_very_eager()
     print output
 
     remote_conn.close()
