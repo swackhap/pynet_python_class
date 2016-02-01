@@ -19,6 +19,9 @@ ccmHistoryRunningLastSaved = '1.3.6.1.4.1.9.9.43.1.1.2.0'
 ccmHistoryStartupLastChanged = '1.3.6.1.4.1.9.9.43.1.1.3.0'
 
 # Get sysUptime
+sysUptime_raw = snmp_helper.snmp_get_oid_v3(pynet_rtr1, snmp_user, oid=sysUptime)
+sysuptime_str = snmp_helper.snmp_extract(sysUptime_raw)
+sysuptime_flt = float(sysuptime_str)
 
 # Initialize pickle file if it doesn't currently exist
 # touch filename.pkl
@@ -38,14 +41,14 @@ time_config_last_changed_str = snmp_helper.snmp_extract(time_config_last_changed
 # Open pickle file and read in all prior data samples
 f = open("config_change_uptime_samples.pkl", "rb")
 config_change = pickle.load(f)
-print "config_change loaded from pickle file:"
-print config_change
+#print "config_change loaded from pickle file:"
+#print config_change
 f.close()
 
 # Append the last config change system time to local data structure
 config_change.append(time_config_last_changed_str)
-print "config_change appended with most recent data:"
-print config_change
+#print "config_change appended with most recent data:"
+#print config_change
 
 # Append the last config change system time to a data structure
 f = open("config_change_uptime_samples.pkl", "wb")
@@ -54,8 +57,14 @@ f.close()
 
 # Check if config changed since last run
 delta_time = float(config_change[-1]) - float(config_change[-2])
+#print delta_time
+#print sysuptime_flt
+print "last config change happened " + str((sysuptime_flt - float(config_change[-1]))/100) \
+  + " seconds ago"
 if delta_time > 0:
-  print "\nConfig has changed since last check"
+  print "\nConfig has changed since last check! \nLast config change happened " \
+    + str((sysuptime_flt - float(config_change[-1]))/100) \
+    + " seconds ago" 
 elif delta_time < 0:
   print "\nRouter rebooted or data is corrupt"
 else:
