@@ -18,7 +18,27 @@ def main():
 
     ssh_conn.expect('#')
 
-    ssh_conn.sendline('show ip int brief')
+    ssh_conn.sendline('show run | inc logging')
+    ssh_conn.expect('#')
+    print ssh_conn.before
+    print ssh_conn.after
+
+    ssh_conn.sendline('config t')
+    ssh_conn.expect('#')
+    print ssh_conn.before
+    print ssh_conn.after
+
+    ssh_conn.sendline('logging buffered 37789')
+    ssh_conn.expect('#')
+    print ssh_conn.before
+    print ssh_conn.after
+
+    ssh_conn.sendline('end')
+    ssh_conn.expect('#')
+    print ssh_conn.before
+    print ssh_conn.after
+
+    ssh_conn.sendline('show run | inc logging')
     ssh_conn.expect('#')
     print ssh_conn.before
     print ssh_conn.after
