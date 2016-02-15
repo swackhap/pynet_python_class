@@ -1,8 +1,8 @@
----
+---:
 access_switches:
-    - {hostname: switch1, ip_addr: 10.1.1.11, secret: mysecretpassword, access_vlan: 15, default_gateway: 10.1.1.1, snmp_community: public}
-    - {hostname: switch2, ip_addr: 10.1.1.12, secret: mysecretpassword, access_vlan: 15, default_gateway: 10.1.1.1, snmp_community: public}
-    - {hostname: switch3, ip_addr: 10.1.1.13, secret: mysecretpassword, access_vlan: 15, default_gateway: 10.1.1.1, snmp_community: public}
-    - {hostname: switch4, ip_addr: 10.1.1.14, secret: mysecretpassword, access_vlan: 15, default_gateway: 10.1.1.1, snmp_community: public}
-    - {hostname: switch5, ip_addr: 10.1.1.15, secret: mysecretpassword, access_vlan: 15, default_gateway: 10.1.1.1, snmp_community: public}
+    - {hostname: switch1, ip_addr: 10.1.1.11, secret: mysecretpassword, access_vlan: 15, default_gateway: 10.1.1.1, snmp_community: public, SNMPv3: TRUE}
+    - {hostname: switch2, ip_addr: 10.1.1.12, secret: mysecretpassword, access_vlan: 15, default_gateway: 10.1.1.1, snmp_community: public, SNMPv3: FALSE}
+    - {hostname: switch3, ip_addr: 10.1.1.13, secret: mysecretpassword, access_vlan: 15, default_gateway: 10.1.1.1, snmp_community: public, SNMPv3: FALSE}
+    - {hostname: switch4, ip_addr: 10.1.1.14, secret: mysecretpassword, access_vlan: 15, default_gateway: 10.1.1.1, snmp_community: public, SNMPv3: FALSE}
+    - {hostname: switch5, ip_addr: 10.1.1.15, secret: mysecretpassword, access_vlan: 15, default_gateway: 10.1.1.1, snmp_community: public, SNMPv3: FALSE}
 
